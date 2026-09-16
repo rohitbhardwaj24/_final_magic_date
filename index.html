@@ -2,184 +2,377 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Something Special 💌</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Great+Vibes&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Something Special For You 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
     body {
-      margin: 0;
-      font-family: 'Playfair Display', serif;
-      background: linear-gradient(to right, #ffe6f0, #fff0f5);
-      color: #c71585;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #fff0f5, #ffd1dc);
+      color: #8b005d;
       text-align: center;
+      min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
+
+    /* Floating background hearts */
+    .bg-heart {
+      position: fixed;
+      font-size: 18px;
+      color: rgba(255, 105, 180, 0.4);
+      animation: floatUp 7s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+      20% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
     .screen {
       display: none;
-      padding: 100px 20px;
+      padding: 60px 20px;
       min-height: 100vh;
+      position: relative;
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
     .active {
-      display: block;
+      display: flex;
     }
 
-    /* Screen 1 - Balloon */
-    #balloon {
-      font-size: 100px;
+    /* Typography */
+    h1, h2 {
+      font-family: 'Great Vibes', cursive;
+      color: #d63384;
+    }
+    h1 { font-size: 2.8rem; margin-bottom: 15px; }
+    h2 { font-size: 2.4rem; margin-bottom: 20px; }
+
+    /* Screen 1: Balloon */
+    #balloon-box {
+      position: relative;
+      display: inline-block;
       cursor: pointer;
+      user-select: none;
+    }
+    #balloon {
+      font-size: 110px;
+      display: inline-block;
       animation: float 3s ease-in-out infinite;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
+    #balloon:hover {
+      transform: scale(1.15) rotate(5deg);
+    }
+    .popped {
+      animation: popEffect 0.3s forwards !important;
+    }
+    @keyframes popEffect {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+      100% { transform: scale(0); opacity: 0; }
+    }
     @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-22px); }
     }
 
-    /* Screen 2 - Quotes */
-    .quote {
-      font-size: 1.6em;
-      margin: 40px auto;
-      max-width: 600px;
+    /* Screen 2: Quotes cards */
+    .quote-card {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 182, 193, 0.6);
+      border-radius: 20px;
+      padding: 20px 25px;
+      margin: 15px auto;
+      max-width: 520px;
+      line-height: 1.6;
+      box-shadow: 0 10px 25px rgba(255, 105, 180, 0.15);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    /* Screen 3: Date invitation */
+    .question {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 30px 0;
+      color: #6a0047;
+    }
+    .btn-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    .btn {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 12px 32px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 15px rgba(214, 51, 132, 0.25);
+    }
+    .yes {
+      background: linear-gradient(45deg, #ff4081, #ff69b4);
+      color: white;
+      z-index: 10;
+    }
+    .yes:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 20px rgba(255, 64, 129, 0.4);
+    }
+    .no {
+      background: #ffffff;
+      color: #ff1493;
+      border: 2px solid #ff69b4;
+      position: absolute;
+      transition: all 0.2s ease-out;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    /* Screen 4: Celebration & Vibe picker */
+    .date-choices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin: 25px 0;
+    }
+    .choice-chip {
+      background: white;
+      border: 2px solid #ffb6c1;
+      padding: 10px 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+    .choice-chip.selected {
+      background: #ff69b4;
+      color: white;
+      border-color: #ff1493;
+      transform: scale(1.05);
     }
 
     .next-btn {
-      margin-top: 40px;
-      padding: 10px 30px;
-      font-size: 1em;
-      border-radius: 25px;
+      margin-top: 25px;
+      padding: 12px 35px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 30px;
       background: #ff69b4;
       color: white;
       border: none;
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+      transition: 0.2s;
+    }
+    .next-btn:hover {
+      transform: scale(1.05);
+      background: #ff1493;
     }
 
-    /* Screen 3 - Final */
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.5em;
-      margin-bottom: 30px;
-      animation: fadeIn 2s ease-in-out;
-    }
-
-    .question {
-      font-size: 1.7em;
-      margin: 40px 0;
-      color: #8b005d;
-    }
-
-    .btn {
-      font-size: 1.2em;
-      padding: 12px 30px;
-      margin: 10px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      position: relative;
-    }
-
-    .yes {
-      background-color: #ff69b4;
-      color: white;
-    }
-
-    .no {
-      background-color: #ffffff;
-      color: #ff1493;
-      border: 2px solid #ff1493;
-      position: absolute;
-    }
-
-    .flowers {
-      font-size: 24px;
-      margin-top: 10px;
-      letter-spacing: 5px;
-    }
-
-    footer {
-      margin-top: 80px;
-      font-size: 0.9em;
-      color: #b03060;
-    }
-
-    /* Screen 4 - Closing message */
-    #screen4 h2 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.8em;
-      color: #ff1493;
-      margin-bottom: 20px;
-    }
-
-    #screen4 p {
-      font-size: 1.5em;
-      color: #8b005d;
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.4em;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
 
+  <!-- Floating Background Hearts -->
+  <div id="hearts-bg"></div>
+
   <!-- Screen 1: Balloon -->
   <div id="screen1" class="screen active">
-    <h2>Something magical is floating toward you... 🎈</h2>
-    <div id="balloon" onclick="showScreen(2)">🎈</div>
-    <p>(Tap the balloon to pop it!)</p>
+    <h2>A little surprise is waiting for you... ✨</h2>
+    <div id="balloon-box" onclick="popBalloon()">
+      <div id="balloon">🎈</div>
+    </div>
+    <p style="margin-top: 15px; font-size: 0.95rem; opacity: 0.8;">(Tap the balloon to unlock it!)</p>
   </div>
 
-  <!-- Screen 2: Beauty Quote -->
+  <!-- Screen 2: Beauty Quotes -->
   <div id="screen2" class="screen">
-    <h2>Just wanted to say...</h2>
-    <div class="quote">"Your presence feels like spring after a long winter — soft, soothing, and beautiful." 🤍</div>
-    <div class="quote">"In a world full of noise, your smile is my favorite silence." 🌼</div>
-    <div class="quote">"You don’t just look beautiful — you radiate it." 🤍🌼</div>
-    <button class="next-btn" onclick="showScreen(3)">Next 🌸</button>
+    <h2>Just a small reminder... 🌸</h2>
+    <div class="quote-card">"Your presence feels like spring after a long winter — soft, soothing, and beautiful." 🤍</div>
+    <div class="quote-card">"In a world full of noise, your laughter is genuinely my favorite sound." 🌼</div>
+    <div class="quote-card">"You don’t just carry beauty — you effortlessly radiate it everywhere." ✨</div>
+    <button class="next-btn" onclick="showScreen(3)">One little question 💌</button>
   </div>
 
   <!-- Screen 3: Date Invitation -->
   <div id="screen3" class="screen">
-    <h1>🌸 "Tere sang bitaye pal kuch khaas ban gaye..." 🌸</h1>
-
-    <div class="flowers">🤍🌼🤍🌼🤍🌼🤍🌼🤍🌼🤍🌼🤍</div>
-
+    <h1>"Tere sang bitaye pal kuch khaas ban gaye..." 🌸</h1>
     <div class="question">
-      Would you like to go on a sweet little date with me? 💗
+      Would you go on a sweet little date with me? 💗
     </div>
 
-    <button class="btn yes" onclick="showScreen(4)">Yes 🤍</button>
-    <button class="btn no" id="noBtn" onclick="showScreen(4)">No 🙈</button>
+    <div class="btn-container" id="container">
+      <button class="btn yes" id="yesBtn" onclick="acceptDate()">Yes, absolutely! 🤍</button>
+      <button class="btn no" id="noBtn">No 🙈</button>
+    </div>
 
-    <div class="flowers">🤍🌼🤍🌼🤍🌼🤍🌼🤍🌼🤍🌼🤍</div>
-
-    <footer>Made just for you 💫</footer>
+    <footer style="margin-top: 50px; font-size: 0.85rem; opacity: 0.7;">Made with lots of care, just for you 💫</footer>
   </div>
 
-  <!-- Screen 4: Closing Message -->
+  <!-- Screen 4: Celebration & Interactive Vibe Picker -->
   <div id="screen4" class="screen">
-    <h2>Thank you for being you! 💖</h2>
-    <p>No matter what, your smile brightens my day. Looking forward to many more moments together. 🌸🤍🌼</p>
-    <div class="flowers">🤍🌼🤍🌼🤍🌼🤍🌼🤍🌼🤍🌼🤍</div>
+    <h2>Yay! You just made my day! 🎉💖</h2>
+    <p style="font-size: 1.1rem; max-width: 500px; line-height: 1.6;">
+      I promise it'll be full of sweet memories, smiles, and good food.
+    </p>
+
+    <p style="margin-top: 25px; font-weight: 600;">Pick our date vibe: 🌸</p>
+    <div class="date-choices">
+      <div class="choice-chip" onclick="selectVibe(this)">☕ Cozy Coffee & Conversations</div>
+      <div class="choice-chip" onclick="selectVibe(this)">🌅 Sunset Walk & Music</div>
+      <div class="choice-chip" onclick="selectVibe(this)">🍕 Midnight Pizza & Drive</div>
+      <div class="choice-chip" onclick="selectVibe(this)">✨ Surprise Me Completely</div>
+    </div>
+
+    <p id="vibe-response" style="font-style: italic; color: #d63384; height: 24px;"></p>
   </div>
 
   <script>
-    function showScreen(n) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById('screen' + n).classList.add('active');
+    // Background hearts generator
+    const heartsBg = document.getElementById('hearts-bg');
+    const heartIcons = ['💖', '🌸', '✨', '🤍', '🌷'];
+    for (let i = 0; i < 18; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'bg-heart';
+      heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDelay = (Math.random() * 5) + 's';
+      heart.style.fontSize = (14 + Math.random() * 14) + 'px';
+      heartsBg.appendChild(heart);
     }
 
-    const noBtn = document.getElementById('noBtn');
-    noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
-      noBtn.style.left = x + 'px';
-      noBtn.style.top = y + 'px';
-    });
-  </script>
+    function showScreen(n) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById('screen' + n);
+      target.classList.add('active');
+    }
 
+    // Balloon pop with confetti
+    function popBalloon() {
+      const balloon = document.getElementById('balloon');
+      balloon.classList.add('popped');
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.6 }
+      });
+      setTimeout(() => {
+        showScreen(2);
+      }, 400);
+    }
+
+    // No button dodging & Yes button growth
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const noTexts = [
+      "No 🙈",
+      "Are you sure? 🥺",
+      "Soch lo achhe se! 🌸",
+      "Pakad ke dikhao 😜",
+      "Wrong button! 🚫",
+      "Ek baar aur socho? ✨",
+      "No option not found! 💖"
+    ];
+    let textIndex = 0;
+    let yesScale = 1;
+
+    function moveNoBtn() {
+      const container = document.getElementById('container');
+      const containerRect = container.getBoundingClientRect();
+
+      // Random position within container boundaries
+      const maxX = window.innerWidth > 500 ? 150 : 90;
+      const maxY = 60;
+      const randomX = (Math.random() - 0.5) * (maxX * 2);
+      const randomY = (Math.random() - 0.5) * (maxY * 2);
+
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+      // Change text playfully
+      textIndex = (textIndex + 1) % noTexts.length;
+      noBtn.innerText = noTexts[textIndex];
+
+      // Grow Yes button slightly
+      if (yesScale < 1.45) {
+        yesScale += 0.08;
+        yesBtn.style.transform = `scale(${yesScale})`;
+      }
+    }
+
+    noBtn.addEventListener('mouseenter', moveNoBtn);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNoBtn();
+    });
+
+    // Accept Date & Confetti shower
+    function acceptDate() {
+      showScreen(4);
+      const duration = 2.5 * 1000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 4,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ff69b4', '#ff1493', '#fff']
+        });
+        confetti({
+          particleCount: 4,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ff69b4', '#ff1493', '#fff']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+
+    // Select date vibe
+    function selectVibe(el) {
+      document.querySelectorAll('.choice-chip').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      const response = document.getElementById('vibe-response');
+      response.innerText = `Perfect choice! Locked in. 🤍`;
+    }
+  </script>
 </body>
 </html>
