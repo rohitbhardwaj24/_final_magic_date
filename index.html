@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Something Just For You 🤍</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <title>Just For You, Gorgeous 🤍</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,600&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti for soft celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root {
-      --primary: #c94d68;
-      --primary-light: #ff758c;
-      --bg-cream: #fff9f6;
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --text-dark: #4a2833;
+      --primary: #d43f66;
+      --primary-hover: #b82d52;
+      --bg-gradient: linear-gradient(135deg, #fff2f5 0%, #ffe9ee 50%, #ffd9e2 100%);
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --text-dark: #3a1d28;
+      --text-muted: #8c566a;
     }
 
     * {
@@ -23,29 +26,29 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #fff2f2 0%, #ffeef2 50%, #fde2e4 100%);
+      background: var(--bg-gradient);
       color: var(--text-dark);
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Soft ambient floating petals */
+    /* Ambient floating petals */
     .petal {
       position: fixed;
       pointer-events: none;
       z-index: 1;
-      animation: floatPetal 8s linear infinite;
-      opacity: 0.5;
+      animation: floatPetals 9s linear infinite;
+      opacity: 0.6;
     }
-    @keyframes floatPetal {
+    @keyframes floatPetals {
       0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
-      20% { opacity: 0.6; }
+      20% { opacity: 0.7; }
       100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
     }
 
     .container {
-      max-width: 500px;
+      max-width: 480px;
       margin: 0 auto;
       min-height: 100vh;
       display: flex;
@@ -61,7 +64,7 @@
       display: none;
       width: 100%;
       text-align: center;
-      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .step-screen.active {
       display: flex;
@@ -70,7 +73,7 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(16px); }
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -80,66 +83,73 @@
       font-weight: 600;
       line-height: 1.3;
     }
-    .handwriting {
+    h2 { font-size: 2.1rem; }
+    
+    .script-text {
       font-family: 'Dancing Script', cursive;
-      font-size: 2rem;
+      font-size: 2.2rem;
       color: var(--primary);
     }
 
     .sub-text {
       font-size: 0.95rem;
-      color: #7d5260;
-      margin-top: 8px;
-      line-height: 1.5;
+      color: var(--text-muted);
+      margin-top: 10px;
+      line-height: 1.6;
     }
 
     /* Primary Action Buttons */
     .btn-main {
       margin-top: 25px;
-      padding: 14px 34px;
+      padding: 13px 34px;
       font-size: 1rem;
       font-weight: 500;
       border-radius: 50px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      background: linear-gradient(135deg, var(--primary), #ff6b8b);
       color: white;
       border: none;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(201, 77, 104, 0.25);
+      box-shadow: 0 8px 22px rgba(212, 63, 102, 0.28);
       transition: all 0.3s ease;
     }
-    .btn-main:active {
-      transform: scale(0.97);
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(212, 63, 102, 0.35);
     }
     .btn-main:disabled {
-      opacity: 0.4;
+      opacity: 0.35;
       cursor: not-allowed;
       box-shadow: none;
+      transform: none;
     }
 
     /* STEP 1: Balloon */
     #balloon {
-      font-size: 90px;
+      font-size: 96px;
       cursor: pointer;
       display: inline-block;
       margin: 30px 0;
       animation: gentleFloat 3s ease-in-out infinite;
-      transition: transform 0.2s ease;
       user-select: none;
+      transition: transform 0.2s ease;
+    }
+    #balloon:hover {
+      transform: scale(1.1);
     }
     @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-16px) rotate(4deg); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
     }
     .pop-animate {
-      animation: balloonBurst 0.35s ease forwards !important;
+      animation: burst 0.35s ease forwards !important;
     }
-    @keyframes balloonBurst {
+    @keyframes burst {
       0% { transform: scale(1); }
-      40% { transform: scale(1.3); opacity: 0.8; }
+      40% { transform: scale(1.35); opacity: 0.8; }
       100% { transform: scale(0); opacity: 0; }
     }
 
-    /* STEP 2: Cards / Compliments */
+    /* STEP 2: Compliment Cards */
     .cards-grid {
       display: flex;
       flex-direction: column;
@@ -155,7 +165,7 @@
       padding: 16px 20px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
       text-align: left;
     }
     .secret-card .card-header {
@@ -164,6 +174,7 @@
       align-items: center;
       font-weight: 500;
       color: var(--primary);
+      font-size: 1.05rem;
     }
     .secret-card .card-body {
       max-height: 0;
@@ -172,31 +183,31 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       color: var(--text-dark);
-      font-size: 0.98rem;
-      line-height: 1.5;
+      font-size: 1rem;
+      line-height: 1.6;
     }
     .secret-card.revealed {
       background: #ffffff;
-      border-color: var(--primary-light);
-      box-shadow: 0 8px 24px rgba(201, 77, 104, 0.12);
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(212, 63, 102, 0.15);
     }
     .secret-card.revealed .card-body {
-      max-height: 120px;
+      max-height: 140px;
       margin-top: 10px;
     }
 
-    /* STEP 3: Slider / Meter */
+    /* STEP 3: Special Slider */
     .slider-box {
       background: var(--card-bg);
       border-radius: 20px;
-      padding: 30px 20px;
+      padding: 30px 22px;
       width: 100%;
       margin: 25px 0;
-      box-shadow: 0 10px 25px rgba(201, 77, 104, 0.08);
+      box-shadow: 0 10px 25px rgba(212, 63, 102, 0.08);
       border: 1px solid #ffe1e6;
     }
     .meter-display {
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 600;
       color: var(--primary);
       margin-bottom: 15px;
@@ -204,7 +215,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
     }
     .custom-range {
       width: 100%;
@@ -221,42 +231,42 @@
       border-radius: 50%;
       background: var(--primary);
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(201, 77, 104, 0.5);
+      box-shadow: 0 0 10px rgba(212, 63, 102, 0.5);
     }
 
-    /* STEP 4: Sealed Envelope */
+    /* STEP 4: Wax Seal Letter */
     .envelope-wrapper {
       margin: 30px 0;
       cursor: pointer;
     }
     .wax-seal {
-      width: 75px;
-      height: 75px;
+      width: 78px;
+      height: 78px;
       background: radial-gradient(circle, #e63956, #a81c35);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 28px;
+      font-size: 30px;
       margin: 0 auto;
-      box-shadow: 0 6px 16px rgba(168, 28, 53, 0.4);
-      transition: transform 0.2s ease;
+      box-shadow: 0 8px 18px rgba(168, 28, 53, 0.35);
+      transition: transform 0.25s ease;
     }
     .wax-seal:hover {
       transform: scale(1.08);
     }
     .letter-paper {
-      background: #fffdfa;
+      background: #ffffff;
       border: 1px solid #fae1dd;
-      border-radius: 12px;
-      padding: 24px 20px;
+      border-radius: 16px;
+      padding: 24px 22px;
       font-family: 'Playfair Display', serif;
       line-height: 1.8;
       font-size: 1.05rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      box-shadow: 0 12px 32px rgba(212, 63, 102, 0.1);
       margin-top: 20px;
       display: none;
+      text-align: left;
       animation: slideUp 0.5s ease forwards;
     }
     @keyframes slideUp {
@@ -264,226 +274,207 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* STEP 5: Final Question */
+    /* STEP 5: Date Question & Guaranteed Visible No Button */
     .action-arena {
       position: relative;
       width: 100%;
-      height: 140px;
-      margin-top: 20px;
+      height: 180px;
+      margin-top: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 20px;
     }
     .btn-yes {
-      padding: 14px 38px;
+      padding: 14px 40px;
       font-size: 1.1rem;
       border-radius: 50px;
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), #ff6b8b);
       color: white;
       border: none;
       cursor: pointer;
       font-weight: 600;
-      box-shadow: 0 6px 18px rgba(201, 77, 104, 0.3);
-      z-index: 10;
+      box-shadow: 0 8px 20px rgba(212, 63, 102, 0.3);
       transition: transform 0.2s ease;
+      z-index: 5;
+    }
+    .btn-yes:hover {
+      transform: scale(1.06);
     }
     .btn-no {
-      padding: 12px 30px;
-      font-size: 1rem;
+      padding: 13px 32px;
+      font-size: 1.05rem;
       border-radius: 50px;
-      background: white;
+      background: #ffffff;
       color: var(--primary);
-      border: 2px solid var(--primary-light);
-      position: absolute;
+      border: 2px solid var(--primary);
       cursor: pointer;
       user-select: none;
-      transition: left 0.25s ease, top 0.25s ease;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      transition: transform 0.22s ease-out;
+      white-space: nowrap;
+      z-index: 10;
     }
 
-    /* Vibe selector on final acceptance */
-    .vibe-box {
+    /* STEP 6: Final Closing Screen */
+    .final-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid #ffd5dc;
+      border-radius: 20px;
+      padding: 30px 24px;
+      box-shadow: 0 12px 30px rgba(212, 63, 102, 0.12);
       margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-    }
-    .vibe-option {
-      background: white;
-      border: 1px solid #ffd0d8;
-      padding: 12px 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 0.95rem;
-    }
-    .vibe-option.active {
-      background: #ffeef2;
-      border-color: var(--primary);
-      color: var(--primary);
-      font-weight: 500;
-      transform: scale(1.02);
-    }
-    .whatsapp-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #25D366;
-      color: white;
-      text-decoration: none;
-      padding: 12px 28px;
-      border-radius: 50px;
-      margin-top: 22px;
-      font-weight: 600;
-      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.25);
+      line-height: 1.8;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- Soft Ambient Floating Petals -->
-  <div id="ambient-petals"></div>
+  <!-- Floating Ambient Petals -->
+  <div id="petals-container"></div>
 
   <div class="container">
 
-    <!-- STEP 1: Balloon -->
+    <!-- STEP 1: Floating Balloon -->
     <div id="step1" class="step-screen active">
-      <h2>Ek Chhota Sa Surprise... ✨</h2>
-      <p class="sub-text">Bas tumhare liye banaya hai. Tap karke kholo!</p>
+      <h2>Hey Gorgeous... ✨</h2>
+      <p class="sub-text">A little surprise made exclusively for you.<br>Pop the balloon to unlock it.</p>
       
-      <div id="balloon" onclick="popFirstBalloon()">🎈</div>
-      <p style="font-size: 0.85rem; color: #9c6c7b;">(Tap the balloon)</p>
+      <div id="balloon" onclick="popBalloon()">🎈</div>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">(Tap to pop)</p>
     </div>
 
-    <!-- STEP 2: Compliment Cards -->
+    <!-- STEP 2: Flirty Compliment Cards -->
     <div id="step2" class="step-screen">
-      <h2>Kuch Baatein Dil Se 🌸</h2>
-      <p class="sub-text">Har card par tap karo unhe reveal karne ke liye:</p>
+      <h2>A Quick Confession... 🌸</h2>
+      <p class="sub-text">Tap each card to reveal the truth:</p>
 
       <div class="cards-grid">
         <div class="secret-card" onclick="revealCard(this)">
           <div class="card-header">
-            <span>✨ Tumhari Smile</span>
+            <span>✨ That Killer Smile</span>
             <span class="status-icon">🔒</span>
           </div>
           <div class="card-body">
-            "Tumhe shayad andaza bhi nahi hota, par jab tum dil se hasti ho na, aas-paas ka sara stress gayab ho jata hai."
+            "Honestly, it should come with a warning sign. The moment you smile, my train of thought completely disappears."
           </div>
         </div>
 
         <div class="secret-card" onclick="revealCard(this)">
           <div class="card-header">
-            <span>🌿 Tumhara Sukoon</span>
+            <span>🌹 That Effortless Charm</span>
             <span class="status-icon">🔒</span>
           </div>
           <div class="card-body">
-            "Duniya mein chahe kitni bhi bhaag-daud ho, tumse baat karke dil ekdum shaant ho jata hai."
+            "You don’t even have to try. You just walk in, be completely yourself, and effortlessly steal all my attention."
           </div>
         </div>
 
         <div class="secret-card" onclick="revealCard(this)">
           <div class="card-header">
-            <span>🤍 Tumhari Presence</span>
+            <span>🤍 Those Eyes</span>
             <span class="status-icon">🔒</span>
           </div>
           <div class="card-body">
-            "You don’t even have to try. Tumhara sirf aas-paas hona hi din ko special bana deta hai."
+            "Pure trouble. Looking into them feels like an open invitation to fall completely and hopelessly hard."
           </div>
         </div>
       </div>
 
-      <button id="step2-btn" class="btn-main" disabled onclick="goToStep(3)">Aage Chalein 💫</button>
+      <button id="step2-btn" class="btn-main" disabled onclick="goToStep(3)">Continue, if you dare... 😉</button>
     </div>
 
-    <!-- STEP 3: Special Meter Slider -->
+    <!-- STEP 3: Attraction / Special Meter -->
     <div id="step3" class="step-screen">
-      <h2>Kitni Special Ho Tum?</h2>
-      <p class="sub-text">Zara slider ko right side swipe karke check karo 😉</p>
+      <h2>How Irresistible Are You?</h2>
+      <p class="sub-text">Drag the slider to find out 😉</p>
 
       <div class="slider-box">
         <div class="meter-display" id="meter-val">0%</div>
         <input type="range" min="0" max="100" value="0" class="custom-range" id="special-slider" oninput="updateMeter(this.value)">
-        <p id="meter-comment" class="sub-text" style="min-height: 24px; margin-top: 15px;">Thoda aage badhao...</p>
+        <p id="meter-comment" class="sub-text" style="min-height: 24px; margin-top: 15px;">Slide it forward...</p>
       </div>
 
-      <button id="step3-btn" class="btn-main" style="display: none;" onclick="goToStep(4)">Ek Aakhri Cheez 💌</button>
+      <button id="step3-btn" class="btn-main" style="display: none;" onclick="goToStep(4)">One Little Thing 💌</button>
     </div>
 
-    <!-- STEP 4: Sealed Letter -->
+    <!-- STEP 4: Wax Sealed Note -->
     <div id="step4" class="step-screen">
       <h2>A Sealed Letter ✉️</h2>
-      <p class="sub-text">Wax seal par tap karke ise unseal karo</p>
+      <p class="sub-text">Tap the wax seal to open it</p>
 
-      <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
+      <div class="envelope-wrapper" onclick="openLetter()">
         <div class="wax-seal" id="seal">💌</div>
       </div>
 
       <div class="letter-paper" id="letter">
-        <p style="margin-bottom: 12px;">"Log toh bohot milte hain zindagi mein...</p>
-        <p style="margin-bottom: 12px;">Par kuch log aise hote hain jinse milkar lagta hai ki inka hona hi sabse sukoon bhari baat hai."</p>
-        <p class="handwriting" style="margin-top: 15px;">Aur mere liye wo tum ho. 🤍</p>
+        <p style="margin-bottom: 12px;">"I could keep giving subtle hints, but let's be honest..."</p>
+        <p style="margin-bottom: 12px;">"Every single conversation with you leaves me wanting more time, more laughs, and closer moments."</p>
+        <p class="script-text" style="font-size: 1.8rem; margin-top: 15px; color: var(--primary);">So I’m done dropping subtle hints. 🤍</p>
       </div>
 
-      <button id="step4-btn" class="btn-main" style="display: none;" onclick="goToStep(5)">Now, a little question 🌸</button>
+      <button id="step4-btn" class="btn-main" style="display: none;" onclick="goToStep(5)">Ready for the real question? ✨</button>
     </div>
 
-    <!-- STEP 5: The Question & Plan -->
+    <!-- STEP 5: The Question & Dodging No Button -->
     <div id="step5" class="step-screen">
-      <h2 style="font-size: 1.8rem;">Itni tareef ke baad... 🙈</h2>
-      <p class="sub-text" style="font-size: 1.15rem; margin: 15px 0; font-family: 'Playfair Display', serif;">
-        Would you like to go on a sweet, quiet little date with me? ☕✨
+      <h2 style="font-size: 2rem;">Now that you know... 🙈</h2>
+      <p class="sub-text" style="font-size: 1.15rem; margin: 15px 0; font-family: 'Playfair Display', serif; color: var(--text-dark);">
+        Will you do me the absolute honor of going on a date with me? 🥂✨
       </p>
 
       <div class="action-arena" id="arena">
-        <button class="btn-yes" onclick="sheSaidYes()">YES 🤍</button>
+        <button class="btn-yes" id="yesBtn" onclick="sheSaidYes()">YES 🤍</button>
         <button class="btn-no" id="runaway-no">No 🙈</button>
       </div>
     </div>
 
-    <!-- STEP 6: Success & WhatsApp Date Confirmation -->
+    <!-- STEP 6: Final Melt-Worthy Celebration (Pure Romance) -->
     <div id="step6" class="step-screen">
-      <h2 class="handwriting" style="font-size: 2.6rem;">Yay! It's a Date! 💖</h2>
-      <p class="sub-text" style="font-size: 1rem;">Pick our date vibe so I can plan it perfectly:</p>
-
-      <div class="vibe-box">
-        <div class="vibe-option active" onclick="pickVibe(this, 'Cozy Coffee & Deep Talks ☕')">☕ Cozy Coffee & Deep Talks</div>
-        <div class="vibe-option" onclick="pickVibe(this, 'Sunset Walk & Peaceful Music 🌅')">🌅 Sunset Walk & Peaceful Music</div>
-        <div class="vibe-option" onclick="pickVibe(this, 'Good Food, Drive & Long Gossips 🍕')">🍕 Good Food, Drive & Long Gossips</div>
+      <h2 class="script-text" style="font-size: 2.8rem;">I knew you had great taste. 😉🥂</h2>
+      
+      <div class="final-card">
+        <p style="margin-bottom: 15px;">
+          It’s officially a date, gorgeous.
+        </p>
+        <p style="margin-bottom: 15px;">
+          Clear your schedule, dress cute <i>(though you make everything look stunning effortlessly)</i>, and let me take care of the rest.
+        </p>
+        <p style="font-weight: 600; color: var(--primary); margin-top: 20px;">
+          Can’t wait to see you. 🤍✨
+        </p>
       </div>
-
-      <!-- Apna WhatsApp number niche 'YOURNUMBER' ki jagah dal sakte ho (e.g. 919876543210) -->
-      <a id="wa-link" href="https://wa.me/?text=I%20said%20YES!%20Coffee%20date%20it%20is%20☕🤍" target="_blank" class="whatsapp-btn">
-        <span>Send on WhatsApp 💬</span>
-      </a>
     </div>
 
   </div>
 
   <script>
-    // Floating petals in background
-    const petalsContainer = document.getElementById('ambient-petals');
-    const petalChars = ['🌸', '🤍', '✨', '🌷'];
-    for(let i = 0; i < 15; i++) {
+    // Floating background petals
+    const container = document.getElementById('petals-container');
+    const symbols = ['🌸', '🤍', '✨', '🌷'];
+    for(let i = 0; i < 16; i++) {
       const p = document.createElement('div');
       p.className = 'petal';
-      p.innerText = petalChars[Math.floor(Math.random() * petalChars.length)];
+      p.innerText = symbols[Math.floor(Math.random() * symbols.length)];
       p.style.left = Math.random() * 100 + 'vw';
       p.style.animationDelay = (Math.random() * 6) + 's';
       p.style.fontSize = (14 + Math.random() * 12) + 'px';
-      petalsContainer.appendChild(p);
+      container.appendChild(p);
     }
 
-    // Switch Screens smoothly
-    function goToStep(stepNumber) {
+    // Screen navigation
+    function goToStep(num) {
       document.querySelectorAll('.step-screen').forEach(s => s.classList.remove('active'));
-      const nextScreen = document.getElementById('step' + stepNumber);
-      if(nextScreen) nextScreen.classList.add('active');
+      const next = document.getElementById('step' + num);
+      if(next) next.classList.add('active');
     }
 
-    // STEP 1: Balloon Pop
-    function popFirstBalloon() {
+    // Step 1: Balloon pop
+    function popBalloon() {
       const b = document.getElementById('balloon');
       b.classList.add('pop-animate');
       setTimeout(() => {
@@ -491,97 +482,101 @@
       }, 350);
     }
 
-    // STEP 2: Cards Reveal Tracker
-    let revealedCount = 0;
+    // Step 2: Card reveals
+    let unlocked = 0;
     function revealCard(card) {
       if(!card.classList.contains('revealed')) {
         card.classList.add('revealed');
         card.querySelector('.status-icon').innerText = '🌸';
-        revealedCount++;
-        if(revealedCount >= 3) {
+        unlocked++;
+        if(unlocked >= 3) {
           const btn = document.getElementById('step2-btn');
           btn.disabled = false;
-          btn.style.animation = "fadeIn 0.5s ease";
         }
       }
     }
 
-    // STEP 3: Special-O-Meter
+    // Step 3: Irresistible meter
     function updateMeter(val) {
       const display = document.getElementById('meter-val');
       const comment = document.getElementById('meter-comment');
       const nextBtn = document.getElementById('step3-btn');
 
-      if(val < 30) {
+      if(val < 35) {
         display.innerText = val + '%';
-        comment.innerText = "Itna kam? Aage badhao... 🥺";
-      } else if(val < 80) {
+        comment.innerText = "Don't play humble with me... 😉";
+      } else if(val < 75) {
         display.innerText = val + '%';
-        comment.innerText = "Keep going, thoda aur aage! ✨";
+        comment.innerText = "Getting warmer... turn it up! 🔥";
       } else if(val < 100) {
         display.innerText = val + '%';
-        comment.innerText = "Almost there... 🌸";
+        comment.innerText = "Almost there... but still not enough for you ✨";
       } else {
-        display.innerHTML = "Infinity % ♾️🤍";
-        comment.innerText = "Limit crossed! You're literally irreplaceable.";
+        display.innerHTML = "1000% Irresistible ♾️💋";
+        comment.innerText = "Off the charts! Completely irreplaceable.";
         nextBtn.style.display = "inline-block";
         document.getElementById('special-slider').disabled = true;
       }
     }
 
-    // STEP 4: Open Letter
+    // Step 4: Break seal
     function openLetter() {
-      document.getElementById('seal').style.transform = "scale(0.8) rotate(45deg)";
-      document.getElementById('seal').style.opacity = "0.7";
+      const seal = document.getElementById('seal');
+      seal.style.transform = "scale(0.85) rotate(45deg)";
+      seal.style.opacity = "0.7";
       setTimeout(() => {
         document.getElementById('letter').style.display = "block";
         document.getElementById('step4-btn').style.display = "inline-block";
       }, 250);
     }
 
-    // STEP 5: Dodger "No" Button (Smooth on Mobile & Desktop)
+    // Step 5: Guaranteed dodging No button
     const noBtn = document.getElementById('runaway-no');
     const arena = document.getElementById('arena');
-    const noQuotes = ["No 🙈", "Pakad ke dikhao! 😜", "Are you sure? 🥺", "Wrong option! ❌", "Soch lo ek baar 🌸"];
-    let quoteIndex = 0;
+    const flirtyReplies = [
+      "No 🙈",
+      "Nice try 😉",
+      "You know you want to 😏",
+      "Wrong button, babe 💋",
+      "Playing hard to get? 😜",
+      "Not an option 🚫",
+      "Too slow! 🤍"
+    ];
+    let replyIdx = 0;
 
-    function escapeNoBtn(e) {
+    function dodgeNo(e) {
       if(e) e.preventDefault();
-      const rect = arena.getBoundingClientRect();
-      const maxX = rect.width - 90;
-      const maxY = rect.height - 40;
+      
+      const arenaRect = arena.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+      
+      // Calculate random translation bounds within the arena
+      const maxDistanceX = (arenaRect.width / 2) - 40;
+      const maxDistanceY = (arenaRect.height / 2) - 20;
 
-      const randomX = Math.random() * (maxX - 20) + 10;
-      const randomY = Math.random() * (maxY - 20) + 10;
+      const randomX = (Math.random() - 0.5) * (maxDistanceX * 1.8);
+      const randomY = (Math.random() - 0.5) * (maxDistanceY * 1.6);
 
-      noBtn.style.left = randomX + 'px';
-      noBtn.style.top = randomY + 'px';
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
 
-      quoteIndex = (quoteIndex + 1) % noQuotes.length;
-      noBtn.innerText = noQuotes[quoteIndex];
+      replyIdx = (replyIdx + 1) % flirtyReplies.length;
+      noBtn.innerText = flirtyReplies[replyIdx];
     }
 
-    noBtn.addEventListener('mouseenter', escapeNoBtn);
-    noBtn.addEventListener('touchstart', escapeNoBtn);
+    noBtn.addEventListener('mouseenter', dodgeNo);
+    noBtn.addEventListener('touchstart', dodgeNo);
 
-    // She Said YES!
+    // Step 6: Final Acceptance Celebration
     function sheSaidYes() {
       goToStep(6);
-    }
-
-    // Vibe selection & dynamic WhatsApp link
-    let chosenVibe = "Cozy Coffee & Deep Talks ☕";
-    function pickVibe(el, vibeName) {
-      document.querySelectorAll('.vibe-option').forEach(opt => opt.classList.remove('active'));
-      el.classList.add('active');
-      chosenVibe = vibeName;
-
-      // Update WhatsApp URL
-      // Replace YOURNUMBER with your mobile number with country code (e.g., 919876543210)
-      const waNumber = ""; // empty rakha hai toh wo aapki chat select karke send kar sakti hai
-      const message = encodeURIComponent(`Hey! I saw your cute website 🙈 and I said YES! 🤍 Let's go for: ${chosenVibe}`);
-      const link = waNumber ? `https://wa.me/${waNumber}?text=${message}` : `https://wa.me/?text=${message}`;
-      document.getElementById('wa-link').href = link;
+      
+      // Soft confetti burst
+      confetti({
+        particleCount: 60,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#d43f66', '#ff6b8b', '#ffffff', '#ffd1dc']
+      });
     }
   </script>
 </body>
